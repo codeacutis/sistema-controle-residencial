@@ -14,6 +14,8 @@ namespace SistemaControle.Model
         [Required]
         public int Idade {get; set;}
 
+        public ICollection<Transacao> Transacoes {get; set;} = new List<Transacao>();
+
         public Pessoa()
         {
             Nome = string.Empty;
