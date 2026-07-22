@@ -3,7 +3,7 @@ using SistemaControle.Model;
 
 namespace SistemaControle.Data
 {
-    class ConnectionContextDb : DbContext
+    public class ConnectionContextDb : DbContext
     {
         public ConnectionContextDb(DbContextOptions<ConnectionContextDb> options)
             : base(options) { }

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaControle.Data;
+using SistemaControle.Interface;
+using SistemaControle.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ConnectionContextDb>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IPessoaService, PessoaService>();
+builder.Services.AddScoped<ITransacaoService, TransacaoService>();
 
 var app = builder.Build();
 
