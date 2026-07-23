@@ -17,14 +17,14 @@ export default function TelaTransacoes() {
 
     try {
       const pessoasResponse = await listarPessoas();
-      setPessoas(pessoasResponse.data);
+      setPessoas(pessoasResponse.data || []);
     } catch {
       setPessoas([]);
     }
 
     try {
       const transacoesResponse = await listarTransacoes();
-      setTransacoes(transacoesResponse.data);
+      setTransacoes(transacoesResponse.data || []);
     } catch {
       setTransacoes([]);
     }
@@ -58,12 +58,12 @@ export default function TelaTransacoes() {
   }, []);
 
   return (
-    <div className="container mt-4">
+    <div className="page-card">
 
-      <h2>Transações</h2>
+      <h2 className="mb-4">💳 Transações</h2>
 
       <TransacaoForm pessoas={pessoas} onSalvar={salvar} />
-      {erro && <div className="alert alert-danger">{erro}</div>}
+      {erro && <div className="alert alert-danger mt-2">{erro}</div>}
       <hr />
       <TransacaoTable pessoas={pessoas} transacoes={transacoes} />
       

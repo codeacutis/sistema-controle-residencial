@@ -10,7 +10,8 @@ export default function PessoaTable({
   onExcluir
 }: Props) {
   return (
-    <table className="table mt-3">
+    <div className="table-responsive">
+      <table className="table mt-3">
       <thead>
         <tr>
           <th>Id</th>
@@ -39,5 +40,6 @@ export default function PessoaTable({
         ))}
       </tbody>
     </table>
+    </div>
   );
 }

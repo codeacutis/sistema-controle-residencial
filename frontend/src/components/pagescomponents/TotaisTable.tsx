@@ -9,7 +9,8 @@ export default function TotaisTable({
 }: Props) {
   return (
     <>
-      <table className="table">
+      <div className="table-responsive">
+        <table className="table">
 
         <thead>
           <tr>
@@ -27,13 +28,9 @@ export default function TotaisTable({
             <tr key={pessoa.id}>
               <td>{pessoa.nome}</td>
               <td>{pessoa.idade}</td>
-              <td>
-                R$ {pessoa.totalReceitas.toFixed(2)}
-              </td>
-              <td>
-                R$ {pessoa.totalDespesas.toFixed(2)}
-              </td>
-              <td>
+              <td className="text-success fw-semibold">R$ {pessoa.totalReceitas.toFixed(2)}</td>
+              <td className="text-danger fw-semibold">R$ {pessoa.totalDespesas.toFixed(2)}</td>
+              <td className={pessoa.saldo >= 0 ? "saldo-positivo" : "saldo-negativo"}>
                 R$ {pessoa.saldo.toFixed(2)}
               </td>
             </tr>
@@ -41,26 +38,37 @@ export default function TotaisTable({
 
         </tbody>
 
-      </table>
+        </table>
+      </div>
 
-      <hr />
-
-      <h4>Totais Gerais</h4>
-
-      <p>
-        <strong>Receitas:</strong>{" "}
-        R$ {dados.totalGeralReceitas.toFixed(2)}
-      </p>
-
-      <p>
-        <strong>Despesas:</strong>{" "}
-        R$ {dados.totalGeralDespesas.toFixed(2)}
-      </p>
-
-      <p>
-        <strong>Saldo Líquido:</strong>{" "}
-        R$ {dados.saldoLiquido.toFixed(2)}
-      </p>
+      <div className="row g-2 mt-3">
+        <div className="col-6">
+          <div className="card text-center border-success">
+            <div className="card-body py-2">
+              <small className="text-muted">Total Receitas</small>
+              <p className="mb-0 text-success fw-bold">R$ {dados.totalGeralReceitas.toFixed(2)}</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="card text-center border-danger">
+            <div className="card-body py-2">
+              <small className="text-muted">Total Despesas</small>
+              <p className="mb-0 text-danger fw-bold">R$ {dados.totalGeralDespesas.toFixed(2)}</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-12">
+          <div className={`card text-center ${dados.saldoLiquido >= 0 ? "border-success" : "border-danger"}`}>
+            <div className="card-body py-2">
+              <small className="text-muted">Saldo Líquido</small>
+              <p className={`mb-0 fw-bold ${dados.saldoLiquido >= 0 ? "saldo-positivo" : "saldo-negativo"}`}>
+                R$ {dados.saldoLiquido.toFixed(2)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

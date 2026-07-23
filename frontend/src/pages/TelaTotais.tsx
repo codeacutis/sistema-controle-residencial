@@ -12,17 +12,23 @@ export default function TelaTotais() {
   }, []);
 
   async function carregar() { // Busca os totais consolidados da API e atualiza o estado
-    const response = await buscarTotais();
-    setDados(response.data);
+
+    try{
+      const response = await buscarTotais();
+      setDados(response.data);
+    } catch {
+      setDados(null);
+    }
+    
   }
 
   if (!dados)
     return <p>Carregando...</p>;
 
   return (
-    <div className="container mt-4">
+    <div className="page-card">
 
-      <h2>Totais</h2>
+      <h2 className="mb-4">📊 Totais</h2>
 
       <TotaisTable dados={dados}/>
 

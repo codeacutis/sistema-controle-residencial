@@ -11,7 +11,8 @@ export default function TransacaoTable({
   transacoes
 }: Props) {
   return (
-    <table className="table mt-3">
+    <div className="table-responsive">
+      <table className="table mt-3">
 
       <thead>
         <tr>
@@ -28,13 +29,13 @@ export default function TransacaoTable({
           <tr key={t.id}>
             <td>{t.id}</td>
             <td>{t.descricao}</td>
-            <td>{t.valor}</td>
+            <td>{t.valor.toFixed(2)}</td>
             <td>{t.tipo}</td>
             <td>{pessoas.find(p => p.id === t.idPessoa)?.nome || 'N/A'}</td>
           </tr>
         ))}
       </tbody>
-
     </table>
+    </div>
   );
 }

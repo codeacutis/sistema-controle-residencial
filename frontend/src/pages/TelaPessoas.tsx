@@ -17,7 +17,7 @@ export default function TelaPessoas() {
   async function carregar() { // Busca a lista atualizada de pessoas da API e atualiza o estado
     try {
       const response = await listarPessoas();
-      setPessoas(response.data);
+      setPessoas(response.data || []);
     } catch {
       setPessoas([]);
     }
@@ -35,7 +35,7 @@ export default function TelaPessoas() {
       if (axios.isAxiosError(e) && e.response?.data?.mensagem) {
         setErro(e.response.data.mensagem);
       } else {
-        setErro("e inesperado.");
+        setErro("Erro inesperado.");
       }
     }
   }
@@ -49,7 +49,7 @@ export default function TelaPessoas() {
       if (axios.isAxiosError(e) && e.response?.data?.mensagem) {
         setErro(e.response.data.mensagem);
       } else {
-        setErro("e inesperado.");
+        setErro("Erro inesperado.");
       }
     }
   }
@@ -59,15 +59,13 @@ export default function TelaPessoas() {
   }, []);
 
   return (
-    <div className="container mt-4">
-      <h2>Pessoas</h2>
+    <div className="page-card">
+      <h2 className="mb-4">👤 Pessoas</h2>
 
       <PessoaForm onSalvar={salvar} />
-      {erro && <div className="alert alert-danger">{erro}</div>}
+      {erro && <div className="alert alert-danger mt-2">{erro}</div>}
       <hr />
       <PessoaTable pessoas={pessoas} onExcluir={excluir}/>
-
-
     </div>
   );
 }

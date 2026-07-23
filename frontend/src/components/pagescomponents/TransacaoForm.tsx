@@ -16,7 +16,7 @@ export default function TransacaoForm({
   onSalvar
 }: Props) {
   const [descricao, setDescricao] = useState("");
-  const [valor, setValor] = useState(0);
+  const [valor, setValor] = useState<number | "">("");
   const [tipo, setTipo] = useState("Despesa");
   const [idPessoa, setIdPessoa] = useState(0);
   // Verifica se a pessoa é menor de idade
@@ -56,8 +56,12 @@ export default function TransacaoForm({
       <input
         className="form-control mb-2"
         type="number"
+        placeholder="Valor (R$)"
+        min="0"
+        step="0.01"
+        value={valor}
         onChange={(e) =>
-          setValor(Number(e.target.value))
+          setValor(e.target.value === "" ? "" : Number(e.target.value))
         }
       />
 
@@ -82,7 +86,7 @@ export default function TransacaoForm({
         onClick={() =>
           onSalvar(
             descricao,
-            valor,
+            Number(valor),
             tipo,
             idPessoa
           )

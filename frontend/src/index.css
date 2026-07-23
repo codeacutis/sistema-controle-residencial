@@ -1,0 +1,41 @@
+body {
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.page-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 576px) {
+  .page-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+}
+
+.saldo-positivo {
+  color: #198754;
+  font-weight: 600;
+}
+
+.saldo-negativo {
+  color: #dc3545;
+  font-weight: 600;
+}

@@ -6,13 +6,13 @@ interface Props {
 
 export default function PessoaForm({ onSalvar }: Props) {
   const [nome, setNome] = useState("");
-  const [idade, setIdade] = useState(0);
+  const [idade, setIdade] = useState<number | "">("");
 
   function enviar() { // Chama a função de salvar recebida via props e limpa os campos do formulário
-    onSalvar(nome, idade);
+    onSalvar(nome, Number(idade));
 
     setNome("");
-    setIdade(0);
+    setIdade("");
   }
 
   return (
@@ -28,8 +28,10 @@ export default function PessoaForm({ onSalvar }: Props) {
         className="form-control mb-2"
         type="number"
         placeholder="Idade"
+        min="0"
+        max="120"
         value={idade}
-        onChange={(e) => setIdade(Number(e.target.value))}
+        onChange={(e) => setIdade(e.target.value === "" ? "" : Number(e.target.value))}
       />
 
       <button
