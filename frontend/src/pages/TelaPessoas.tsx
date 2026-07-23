@@ -23,7 +23,17 @@ export default function TelaPessoas() {
     }
   }
 
-  async function salvar(nome: string, idade: number) { // Envia os dados do formulário para a API e recarrega a lista em caso de sucesso
+  async function salvar(nome: string, idade: number) {
+    if (!nome.trim() || !idade) { // Valida os dados antes de enviar
+      setErro("Preencha todos os campos!");
+      return;
+    }
+
+    if (idade <= 0 || idade > 120) {
+      setErro("A idade deve ser um número entre 1 e 120.");
+      return;
+    }
+ // Envia os dados do formulário para a API e recarrega a lista em caso de sucesso
     try{
       await criarPessoa({
       nome,

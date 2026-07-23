@@ -30,7 +30,12 @@ export default function TelaTransacoes() {
     }
   }
 
-  async function salvar(descricao: string, valor: number, tipo: string, idPessoa: number) { // Envia os dados do formulário para a API e recarrega a lista em caso de sucesso
+  async function salvar(descricao: string, valor: number, tipo: string, idPessoa: number) {
+    
+    if (!descricao || !valor || !tipo || !idPessoa) {
+      setErro("Todos os campos são obrigatórios.");
+      return;
+    }// Envia os dados do formulário para a API e recarrega a lista em caso de sucesso
     
     try{
       await criarTransacao({
