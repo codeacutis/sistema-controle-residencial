@@ -1,30 +1,29 @@
-# Build output
-bin/
-obj/
+# ========================
+# Backend - .NET / C#
+# ========================
+SistemaControle/bin/
+SistemaControle/obj/
+SistemaControle/*.db
+SistemaControle/*.db-shm
+SistemaControle/*.db-wal
+SistemaControle/appsettings.json
+SistemaControle/appsettings.Development.json
 
-# SQLite database files
-*.db
-*.db-shm
-*.db-wal
+# ========================
+# Frontend - Node / React
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
 
-# Visual Studio / VS Code
+# ========================
+# Geral
+# ========================
 .vs/
+.vscode/
 *.user
 *.suo
-.vscode/
-
-# Logs
 *.log
-
-# NuGet
-*.nupkg
-project.lock.json
-
-# Environment / secrets
-appsettings.json
-appsettings.Development.json
-*.env
-
-# OS
 .DS_Store
 Thumbs.db
