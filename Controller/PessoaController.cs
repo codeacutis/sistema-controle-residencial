@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaControle.DTOs;
 using SistemaControle.Interface;
-using SistemaControle.Model;
 
 namespace SistemaControle.Controller
 {
-    [ApiController]
     [Route("api/pessoa")]
+    [ApiController]
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaService _pessoaService;
@@ -21,16 +20,24 @@ namespace SistemaControle.Controller
         {
             try
             {
-                Pessoa pessoa = await _pessoaService.SalvarPessoa(pessoaDTO);
+                var pessoa = await _pessoaService.SalvarPessoa(pessoaDTO);
                 return CreatedAtAction(
                     nameof(ObterPessoa),
                     new { id = pessoa.Id }, 
                     pessoa
                 );
-            } catch
+            } catch (KeyNotFoundException ex)
             {
-                return UnprocessableEntity(new { mensagem = "Todos os dados são necessários para a requisição"});
-            }      
+                return NotFound(new { mensagem = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return UnprocessableEntity(new { mensagem = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -46,7 +53,7 @@ namespace SistemaControle.Controller
         public async Task<IActionResult> ObterPessoas()
         {
             var pessoas = await _pessoaService.BuscarPessoas();
-            if(!pessoas.Any())
+            if(pessoas.Count == 0)
                 return NoContent();
             return Ok(pessoas);
         }

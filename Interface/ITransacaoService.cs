@@ -5,8 +5,8 @@ namespace SistemaControle.Interface
 {
     public interface ITransacaoService
     {
-        Task<Transacao> SalvarTransacao(TransacaoDTO transacaoDTO);
-        Task<List<Transacao>> BuscarTransacoes();
+        Task<TransacaoResponseDTO> SalvarTransacao(TransacaoDTO transacaoDTO);
+        Task<List<TransacaoResponseDTO>> BuscarTransacoes();
         Task<TotaisResponseDTO> BuscarTotais(); 
     }
 }

@@ -37,13 +37,14 @@ namespace SistemaControle.Service
                 SaldoLiquido: totalPorPessoa.Sum(p => p.Saldo)
             );
         }
-
-        public async Task<List<Transacao>> BuscarTransacoes()
+        public async Task<List<TransacaoResponseDTO>> BuscarTransacoes()
         {
-            return await _context.Transacoes.ToListAsync();
+            return await _context.Transacoes
+                .Select(t => new TransacaoResponseDTO(t.Id, t.Descricao, t.Valor, t.Tipo, t.IdPessoa))
+                .ToListAsync();
         }
 
-        public async Task<Transacao> SalvarTransacao(TransacaoDTO transacaoDTO)
+        public async Task<TransacaoResponseDTO> SalvarTransacao(TransacaoDTO transacaoDTO)
         {
             var pessoa = await _pessoaService.BuscarPessoa(transacaoDTO.IdPessoa);
             if (pessoa is null)
@@ -55,7 +56,7 @@ namespace SistemaControle.Service
             var transacao = new Transacao(transacaoDTO.Descricao, transacaoDTO.Valor, transacaoDTO.Tipo, transacaoDTO.IdPessoa);
             await _context.Transacoes.AddAsync(transacao);
             await _context.SaveChangesAsync();
-            return transacao;
+            return new TransacaoResponseDTO(transacao.Id, transacao.Descricao, transacao.Valor, transacao.Tipo, transacao.IdPessoa);
         }
             
     }

@@ -20,9 +20,11 @@ namespace SistemaControle.Service
             return await _context.Pessoas.FindAsync(id);
         }
 
-        public async Task<List<Pessoa>> BuscarPessoas()
+        public async Task<List<PessoaResponseDTO>> BuscarPessoas()
         {
-            return await _context.Pessoas.ToListAsync();
+            return await _context.Pessoas
+                .Select(p => new PessoaResponseDTO(p.Id, p.Nome, p.Idade))
+                .ToListAsync();
         }
 
         public async Task<bool> ExcluirPessoa(int id)
@@ -40,12 +42,12 @@ namespace SistemaControle.Service
             }
         }
 
-        public async Task<Pessoa> SalvarPessoa(PessoaDTO pessoaDTO)
+        public async Task<PessoaResponseDTO> SalvarPessoa(PessoaDTO pessoaDTO)
         {
             var pessoa = new Pessoa(pessoaDTO.Nome, pessoaDTO.Idade);
             await _context.Pessoas.AddAsync(pessoa);
             await _context.SaveChangesAsync();
-            return pessoa;
+            return new PessoaResponseDTO(pessoa.Id, pessoa.Nome, pessoa.Idade);
         }
     }
 }
