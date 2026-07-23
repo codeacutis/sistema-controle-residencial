@@ -15,11 +15,13 @@ namespace SistemaControle.Service
             _context = context;
         }
 
+        // Busca uma pessoa pelo id diretamente no banco, retorna null se não encontrada
         public async Task<Pessoa?> BuscarPessoa(int id)
         {
             return await _context.Pessoas.FindAsync(id);
         }
 
+        // Retorna todas as pessoas mapeadas para DTO
         public async Task<List<PessoaResponseDTO>> BuscarPessoas()
         {
             return await _context.Pessoas
@@ -27,6 +29,7 @@ namespace SistemaControle.Service
                 .ToListAsync();
         }
 
+        // Remove a pessoa e suas transações do banco via cascade delete, retorna false se não encontrada
         public async Task<bool> ExcluirPessoa(int id)
         {
             var pessoa = await _context.Pessoas.FindAsync(id);
@@ -42,6 +45,7 @@ namespace SistemaControle.Service
             }
         }
 
+        // Cria uma nova pessoa no banco e retorna o DTO com o id gerado
         public async Task<PessoaResponseDTO> SalvarPessoa(PessoaDTO pessoaDTO)
         {
             var pessoa = new Pessoa(pessoaDTO.Nome, pessoaDTO.Idade);

@@ -15,6 +15,7 @@ namespace SistemaControle.Controller
             _pessoaService = pessoaService;
         }
 
+        // Recebe os dados via corpo da requisição, salva a pessoa e retorna 201 com a localização do recurso criado
         [HttpPost]
         public async Task<IActionResult> SalvarPessoa([FromBody] PessoaDTO pessoaDTO)
         {
@@ -40,6 +41,7 @@ namespace SistemaControle.Controller
             }
         }
 
+        // Exclui a pessoa pelo id informado na rota e retorna 404 se não encontrada
         [HttpDelete("{id}")]
         public async Task<IActionResult> ExcluirPessoa([FromRoute] int id)
         {
@@ -49,6 +51,7 @@ namespace SistemaControle.Controller
             return Ok();
         }
 
+        // Retorna a lista de todas as pessoas cadastradas ou 204 se não houver nenhuma
         [HttpGet]
         public async Task<IActionResult> ObterPessoas()
         {
@@ -58,6 +61,7 @@ namespace SistemaControle.Controller
             return Ok(pessoas);
         }
 
+        // Retorna uma pessoa específica pelo id informado na rota ou 404 se não encontrada
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterPessoa([FromRoute] int id)
         {

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SistemaControle.Data;
 using SistemaControle.Interface;
@@ -9,14 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Registra o contexto do banco de dados SQLite usando a connection string do appsettings
 builder.Services.AddDbContext<ConnectionContextDb>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Registra os serviços com ciclo de vida Scoped
 builder.Services.AddScoped<IPessoaService, PessoaService>();
 builder.Services.AddScoped<ITransacaoService, TransacaoService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers() //
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())); // Força o sistema a ler o valor de Enums como string
 
-
+// Configura a política de CORS permitindo requisições do frontend em localhost:5173
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>

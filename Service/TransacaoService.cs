@@ -17,6 +17,7 @@ namespace SistemaControle.Service
             _pessoaService = pessoaService;
         }
 
+        // Carrega todas as pessoas com suas transações e calcula receitas, despesas e saldo de cada uma
         public async Task<TotaisResponseDTO> BuscarTotais()
         {
             var pessoas = await _context.Pessoas.Include(p => p.Transacoes).ToListAsync();
@@ -37,6 +38,8 @@ namespace SistemaControle.Service
                 SaldoLiquido: totalPorPessoa.Sum(p => p.Saldo)
             );
         }
+
+        // Retorna todas as transações, mapeadas para DTO
         public async Task<List<TransacaoResponseDTO>> BuscarTransacoes()
         {
             return await _context.Transacoes
@@ -44,6 +47,7 @@ namespace SistemaControle.Service
                 .ToListAsync();
         }
 
+        // Valida se a pessoa existe e se menor de idade não está cadastrando receita, depois persiste a transação
         public async Task<TransacaoResponseDTO> SalvarTransacao(TransacaoDTO transacaoDTO)
         {
             var pessoa = await _pessoaService.BuscarPessoa(transacaoDTO.IdPessoa);

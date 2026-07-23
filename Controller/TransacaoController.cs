@@ -15,6 +15,7 @@ namespace SistemaControle.Controller
             _transacaoService = transacaoService;
         }
 
+        // Recebe os dados via corpo da requisição, salva a transação e retorna os erros correspondentes
         [HttpPost]
         public async Task<IActionResult> SalvarTransacao([FromBody] TransacaoDTO transacaoDTO)
         {
@@ -41,6 +42,7 @@ namespace SistemaControle.Controller
 
         }
 
+        // Retorna a lista de todas as transações cadastradas ou 204 se não houver nenhuma
         [HttpGet]
         public async Task<IActionResult> BuscarTransacoes()
         {
@@ -50,6 +52,7 @@ namespace SistemaControle.Controller
             return Ok(listaTransacao);
         }
 
+        // Retorna os totais consolidados de receitas, despesas e saldo por pessoa e o total geral
         [HttpGet("totais")]
         public async Task<IActionResult> BuscarTotais()
         {
